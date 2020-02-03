@@ -51,13 +51,22 @@ userSchema.pre('save', async function (next) {
 	next();
 });
 
+userSchema.pre('save', function (next) {
+	if (!this.isModified('password') || this.isNew) return next();
+	this.passwordChangedAt = Date.now() - 1000;
+	next();
+});
+
 userSchema.methods.correctPassword = async function (candidatePassword, userPassword) {
 	return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
 	if (this.passwordChangedAt) {
-		const changedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+		const changedTimeStamp = parseInt(
+			this.passwordChangedAt.getTime() / 1000,
+			10
+		);
 		console.log(changedTimeStamp, JWTTimeStamp);
 		return JWTTimeStamp < changedTimeStamp;
 	}

@@ -22,9 +22,9 @@ mongoose
 	.connect(DB, {
 		useNewUrlParser: true,
 		useCreateIndex: true,
-		useFindAndModify: false,
+		useFindAndModify: false
 	})
-	.then(con => {
+	.then(() => {
 		console.log('DB connected');
 	});
 
