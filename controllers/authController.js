@@ -62,7 +62,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 	}
 
 	const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-	console.log(decoded);
 
 	const freshUser = await User.findById(decoded.id);
 
@@ -96,7 +95,9 @@ exports.restrictTo = (...roles) => {
 exports.forgotPassword = catchAsync(async (req, res, next) => {
 	const user = await User.findOne({ email: req.body.email });
 	if (!user) {
-		return next(new AppError('There is no usert with email address.', 404));
+		return next(new AppError('There is no user with that email address.', 404));
 	}
+	const resetToken = user.createPasswordResetToken();
+	await user.save({ validateBeforeSave: false });
 	next();
 });
