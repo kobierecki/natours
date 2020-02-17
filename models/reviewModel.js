@@ -24,13 +24,11 @@ const reviewSchema = new mongoose.Schema(
 				required: [true, 'A review must have a tour']
 			}
 		],
-		user: [
-			{
-				type: mongoose.Schema.ObjectId,
-				ref: 'User',
-				required: [true, 'A review must have a user']
-			}
-		]
+		user: {
+			type: mongoose.Schema.ObjectId,
+			ref: 'User',
+			required: [true, 'A review must have a user']
+		}
 	},
 	{
 		toJSON: { virtuals: true },

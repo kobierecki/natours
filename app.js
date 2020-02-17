@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controllers/errorControllers');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 app.set('view engine', 'pug');
@@ -49,7 +50,18 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter polution
-app.use(hpp({ whitelist: ['duration', 'ratingsQuantity', 'ratingsAverage', 'difficulty', 'maxGroupSize', 'price'] }));
+app.use(
+	hpp({
+		whitelist: [
+			'duration',
+			'ratingsQuantity',
+			'ratingsAverage',
+			'difficulty',
+			'maxGroupSize',
+			'price'
+		]
+	})
+);
 
 // Test
 app.use((req, res, next) => {
@@ -59,28 +71,11 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
-app.get('/', (req, res) => {
-	res.status(200).render('base', {
-		tour: 'The fores hiker',
-		user: 'Jonas'
-	});
-});
-
-app.get('/overview', (req, res) => {
-	res.status(200).render('overview', {
-		title: 'All tours'
-	});
-});
-
-app.get('/tour', (req, res) => {
-	res.status(200).render('tour', {
-		title: 'Forest Hiker'
-	});
-});
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/', viewRouter);
 
 app.all('*', (req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
