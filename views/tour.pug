@@ -4,6 +4,7 @@ block append head
 	script(src='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js')
 	link(href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet')
 	//- script(src='/js/mapbox.js')
+	
 mixin reviewCard(review)
 	.reviews__card
 		.reviews__avatar
@@ -73,6 +74,7 @@ block content
 			.picture-box
 				img.picture-box__img(src=`/img/tours/${img}`, alt=`${tour.name} Tour ${i + 1}`, class=`.picture-box__img--${i + 1}`)
 	section.section-map
+		- console.log(tour.locations);
 		#map(data-locations=`${JSON.stringify(tour.locations)}`)
 
 	section.section-reviews
