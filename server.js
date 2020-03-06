@@ -4,8 +4,8 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 
 process.on('uncaughtException', err => {
-	console.log(err.name, err.message);
-	console.log('UNCAUGHT EXCEPTION!');
+	// console.log(err.name, err.message);
+	// console.log('UNCAUGHT EXCEPTION!');
 	server.close(() => {
 		process.exit(1);
 	});
@@ -25,17 +25,17 @@ mongoose
 		useFindAndModify: false
 	})
 	.then(() => {
-		console.log('DB connected');
+		// console.log('DB connected');
 	});
 
 const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
-	console.log(`Server is running on port ${port}`);
+	// console.log(`Server is running on port ${port}`);
 });
 
 process.on('unhandledRejection', err => {
-	console.log(err.name, err.message);
-	console.log('UNHANDLED REJECTION!');
+	// console.log(err.name, err.message);
+	// console.log('UNHANDLED REJECTION!');
 	server.close(() => {
 		process.exit(1);
 	});

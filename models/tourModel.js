@@ -146,10 +146,10 @@ tourSchema.pre(/^find/, function (next) {
 	next();
 });
 
-tourSchema.post(/^find/, function (doc, next) {
-	console.log(`Querry took ${Date.now() - this.start}`);
-	next();
-});
+// tourSchema.post(/^find/, function (doc, next) {
+// 	console.log(`Querry took ${Date.now() - this.start}`);
+// 	next();
+// });
 
 tourSchema.pre('aggregate', function (next) {
 	// Hide secret tours if geoNear is NOT used
